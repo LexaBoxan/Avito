@@ -37,12 +37,12 @@
                         <td>{{ $ad->user->name }}</td>
                         <td>{{ $ad->created_at->format('d.m.Y') }}</td>
                         <td>
-                            @if ($ad->image)
-                                <img src="{{ asset($ad->image) }}" alt="Фото" style="width: 100%;">
+                            @php($cover = $ad->coverImagePath())
+                            @if($cover)
+                                <img src="{{ asset($cover) }}" alt="Фото" style="max-width: 160px; border-radius: 6px;">
                             @else
-                                <img src="https://via.placeholder.com/300x200?text=Нет+фото" alt="Нет фото" style="width: 100%;">
+                                <img src="https://via.placeholder.com/160x110?text=Нет+фото" alt="Нет фото" style="max-width: 160px; border-radius: 6px;">
                             @endif
-
                         </td>
                         <td>
                             <form action="{{ route('moderation.approve', $ad) }}" method="POST" style="display:inline-block;">

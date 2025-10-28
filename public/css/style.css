@@ -1,0 +1,23 @@
+:root {
+    --app-bg: #f8f9fa;
+}
+
+body {
+    background-color: var(--app-bg);
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.carousel-indicators .active {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.card img {
+    display: block;
+}

@@ -3,43 +3,59 @@
 @section('title', 'Создать объявление')
 
 @section('content')
-<hgroup style="margin-bottom: 2rem;">
-    <h2>Новое объявление</h2>
-    <h3>Заполните поля ниже</h3>
-</hgroup>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h2 class="h3 mb-3">Новое объявление</h2>
+                <p class="text-muted mb-4">Заполните все поля и добавьте несколько хороших фотографий, чтобы объявление выглядело привлекательнее.</p>
 
-@if(session('success'))
-    <article style="background-color: #e6ffed; padding: 1rem; border-radius: 5px;">
-        {{ session('success') }}
-    </article>
-@endif
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
 
-@if($errors->any())
-    <article style="background-color: #ffe6e6; padding: 1rem; border-radius: 5px;">
-        <ul style="margin: 0;">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </article>
-@endif
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-<form action="{{ route('ads.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+                <form action="{{ route('ads.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    @csrf
 
-    <label for="title">Заголовок</label>
-    <input type="text" id="title" name="title" placeholder="Например: Продам велосипед" value="{{ old('title') }}" required>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Заголовок</label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Например: Продам велосипед" value="{{ old('title') }}" required>
+                    </div>
 
-    <label for="description">Описание</label>
-    <textarea id="description" name="description" rows="5" placeholder="Опишите товар подробнее..." required>{{ old('description') }}</textarea>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Описание</label>
+                        <textarea id="description" name="description" rows="5" class="form-control" placeholder="Опишите товар подробнее..." required>{{ old('description') }}</textarea>
+                    </div>
 
-    <label for="price">Цена, ₽</label>
-    <input type="number" id="price" name="price" step="0.01" placeholder="Например: 1500" value="{{ old('price') }}" required>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label">Цена, ₽</label>
+                            <input type="number" id="price" name="price" class="form-control" min="0" step="0.01" placeholder="Например: 1500" value="{{ old('price') }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="images" class="form-label">Фотографии</label>
+                            <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
+                            <div class="form-text">До 10 изображений в форматах JPG, PNG, GIF или WebP.</div>
+                        </div>
+                    </div>
 
-    <label for="images">Фотографии</label>
-    <input type="file" name="images[]" id="images" multiple accept="image/*">
-
-
-    <button type="submit" class="contrast" style="margin-top: 1rem;">Опубликовать</button>
-</form>
+                    <div class="d-grid d-sm-flex justify-content-sm-end gap-3 mt-4">
+                        <a href="{{ route('home') }}" class="btn btn-outline-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-primary">Отправить на модерацию</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

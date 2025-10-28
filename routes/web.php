@@ -20,6 +20,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Домашняя страница
 Route::get('/', [AdController::class, 'index'])->name('home');
 
+Route::get('/ads/{ad}', [AdController::class, 'show'])
+    ->whereNumber('ad')
+    ->name('ads.show');
+
 
 Route::middleware(['auth'])->prefix('ads')->name('ads.')->group(function () {
     Route::get('/create', [AdController::class, 'create'])->name('create');
