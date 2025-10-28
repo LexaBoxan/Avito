@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ad extends Model
 {
@@ -18,14 +20,26 @@ class Ad extends Model
         'user_id',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function images()
-{
-    return $this->hasMany(AdImage::class);
-}
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(AdImage::class);
+    }
+
+    public function coverImagePath(): ?string
+    {
+        $image = $this->images->first();
+
+        if ($image) {
+            return $image->path;
+        }
+
+        return $this->image ?: null;
+    }
 
 }
 
