@@ -15,7 +15,6 @@ class Ad extends Model
         'title',
         'description',
         'price',
-        'image',
         'status',
         'user_id',
     ];
@@ -32,11 +31,8 @@ class Ad extends Model
 
     public function coverImagePath(): ?string
     {
-        $image = $this->images->first();
-
-        if ($image) {
-            return $image->path;
-        }
+         $image = $this->images->first();
+        return $image ? $image->path : null;
 
         return $this->image ?: null;
     }

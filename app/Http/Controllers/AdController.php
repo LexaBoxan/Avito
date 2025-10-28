@@ -33,21 +33,11 @@ class AdController extends Controller
 
         // Обработка изображений (если есть)
         if ($request->hasFile('images')) {
-            $coverPath = null;
-
             foreach ($request->file('images') as $image) {
                 $path = $image->store('ads', 'public');
-
                 $ad->images()->create([
                     'path' => 'storage/' . $path,
                 ]);
-
-                $coverPath = $coverPath ?? 'storage/' . $path;
-            }
-
-            if ($coverPath) {
-                $ad->image = $coverPath;
-                $ad->save();
             }
         }
 
