@@ -22,16 +22,15 @@ class AdController extends Controller
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
 
-        // Сохраняем объявление
+
         $ad = new Ad();
         $ad->user_id = auth()->id();
         $ad->title = $validated['title'];
         $ad->description = $validated['description'];
         $ad->price = $validated['price'];
-        $ad->status = 'moderation'; // по умолчанию
-        $ad->save(); // обязательно ДО загрузки изображений
+        $ad->status = 'moderation';
+        $ad->save();
 
-        // Обработка изображений (если есть)
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('ads', 'public');

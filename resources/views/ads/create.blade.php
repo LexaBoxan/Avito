@@ -34,7 +34,8 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание</label>
-                        <textarea id="description" name="description" rows="5" class="form-control" placeholder="Опишите товар подробнее..." required>{{ old('description') }}</textarea>
+                        <textarea name="content" class="js-ckeditor">{{ old('content', $ad->content ?? '') }}</textarea>
+
                     </div>
 
                     <div class="row g-3">
