@@ -14,13 +14,13 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::all(); // Или ->paginate() если много
+        $users = User::all();
         return view('admin.users', compact('users'));
     }
     public function updateRole(Request $request, User $user)
     {
         if ($user->id === auth()->id()) {
-            return back()->with('error', 'Нельзя изменить свои права.');
+            return back()->with('error', 'Нельзя изменить собственную роль.');
         }
 
         $request->validate([
@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function destroyUser(User $user)
     {
         if ($user->id === auth()->id()) {
-            return back()->with('error', 'Нельзя удалить самого себя!');
+            return back()->with('error', 'Нельзя удалить свою учётную запись.');
         }
 
         $user->delete();

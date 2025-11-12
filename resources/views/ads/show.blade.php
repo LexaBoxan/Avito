@@ -17,18 +17,18 @@
                         @foreach($ad->images as $index => $image)
                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                 <div class="ratio ratio-4x3 bg-light overflow-hidden">
-                                    <img src="{{ asset($image->path) }}" class="w-100 h-100 object-fit-cover" alt="{{ $ad->title }} - фото {{ $index + 1 }}">
+                                    <img src="{{ asset($image->path) }}" class="w-100 h-100 object-fit-cover" alt="{{ $ad->title }} — фото {{ $index + 1 }}">
                                 </div>
                             </div>
                         @endforeach
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Предыдущее</span>
+                        <span class="visually-hidden">Назад</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Следующее</span>
+                        <span class="visually-hidden">Вперёд</span>
                     </button>
                     <div class="carousel-indicators">
                         @foreach($ad->images as $index => $image)
@@ -45,7 +45,7 @@
             @endif
         @else
             <div class="ratio ratio-4x3 bg-light rounded shadow-sm d-flex align-items-center justify-content-center">
-                <span class="text-muted">Фотографии не добавлены</span>
+                <span class="text-muted">Фотографии отсутствуют</span>
             </div>
         @endif
     </div>
@@ -56,7 +56,7 @@
                 <div class="display-6 fw-semibold mb-3">{{ number_format($ad->price, 0, ',', ' ') }} ₽</div>
 
                 <dl class="row small text-muted mb-4">
-                    <dt class="col-sm-4">Размещено</dt>
+                    <dt class="col-sm-4">Опубликовано</dt>
                     <dd class="col-sm-8">{{ $ad->created_at->format('d.m.Y H:i') }}</dd>
                     <dt class="col-sm-4">Продавец</dt>
                     <dd class="col-sm-8">{{ $ad->user->name }}</dd>
@@ -71,16 +71,15 @@
                 </dl>
 
                 <h2 class="h5">Описание</h2>
-                
                 <div class="ad-description fs-6">
                     {!! $ad->description !!}
                 </div>
 
                 <div class="mt-4 d-flex gap-2">
-                    <a href="{{ route('home') }}" class="btn btn-outline-secondary">Назад к списку</a>
+                    <a href="{{ route('home') }}" class="btn btn-outline-secondary">Вернуться к списку</a>
                     @auth
                         @if(auth()->id() === $ad->user_id)
-                            <span class="badge bg-primary align-self-center">Ваше объявление</span>
+                            <span class="badge bg-primary align-self-center">Это ваше объявление</span>
                         @endif
                     @endauth
                 </div>

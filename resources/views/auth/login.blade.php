@@ -9,7 +9,7 @@
       <a href="/" class="h1"><b>Avito</b>Clone</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Войти в аккаунт</p>
+      <p class="login-box-msg">Войдите в свой аккаунт</p>
 
       <form action="{{ route('login.attempt') }}" method="post">
         @csrf

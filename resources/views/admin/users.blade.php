@@ -2,7 +2,6 @@
 @section('title', 'Пользователи')
 @section('content')
 
-<!-- Flash-сообщения -->
 @if(session('success'))
   <div class="alert alert-success">{{ session('success') }}</div>
 @endif
@@ -20,7 +19,7 @@
           <th>Имя</th>
           <th>Email</th>
           <th>Роль</th>
-          <th>Создан</th>
+          <th>Регистрация</th>
           <th>Действия</th>
         </tr>
       </thead>
@@ -32,27 +31,24 @@
             <td>{{ $user->email }}</td>
             <td>
                 @if($user->role === 'admin')
-                <span class="badge badge-success">Админ</span>
+                <span class="badge badge-success">Администратор</span>
                 @elseif($user->role === 'moderator')
                 <span class="badge badge-info">Модератор</span>
                 @else
                 <span class="badge badge-secondary">Пользователь</span>
                 @endif
-
             </td>
             <td>{{ $user->created_at->format('d.m.Y') }}</td>
             <td>
-              <!-- Кнопка смены роли -->
               <form action="{{ route('admin.users.updateRole', $user) }}" method="POST">
                     @csrf
                     <select name="role" class="form-control form-control-sm" onchange="this.form.submit()">
                         <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>Пользователь</option>
                         <option value="moderator" {{ $user->role === 'moderator' ? 'selected' : '' }}>Модератор</option>
-                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Админ</option>
+                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Администратор</option>
                     </select>
                 </form>
 
-              <!-- Кнопка удаления -->
               <form method="POST" action="{{ route('admin.users.destroy', $user) }}" style="display:inline;">
                 @csrf
                 @method('DELETE')

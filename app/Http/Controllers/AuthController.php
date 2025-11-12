@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Вы успешно зарегистрированы');
+        return redirect('/')->with('success', 'Регистрация прошла успешно.');
     }
 
     public function showLoginForm()
@@ -43,11 +43,11 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect('/')->with('success', 'Вы вошли в систему');
+            return redirect('/')->with('success', 'Вы успешно вошли.');
         }
 
         return back()->withErrors([
-            'email' => 'Неверный email или пароль',
+            'email' => 'Неверный email или пароль.',
         ]);
     }
 
@@ -57,6 +57,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Вы вышли из системы');
+        return redirect('/')->with('success', 'Вы вышли из аккаунта.');
     }
 }

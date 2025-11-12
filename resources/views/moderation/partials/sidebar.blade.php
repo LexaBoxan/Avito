@@ -12,7 +12,6 @@
             <p>Объявления</p>
           </a>
         </li>
-        {{-- future links --}}
       </ul>
     </nav>
   </div>

@@ -9,7 +9,7 @@
       <a href="/" class="h1"><b>Avito</b>Clone</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Создать новый аккаунт</p>
+      <p class="login-box-msg">Создайте новый аккаунт</p>
 
       <form action="{{ route('register.store') }}" method="post">
         @csrf
@@ -43,7 +43,7 @@
             <a href="{{ route('login') }}">Уже есть аккаунт?</a>
           </div>
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Регистрация</button>
+            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
           </div>
         </div>
       </form>

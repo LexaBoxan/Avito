@@ -7,7 +7,7 @@
     <div class="row mb-4">
         <div class="col">
             <h2>Модерация объявлений</h2>
-            <p class="text-muted">Проверь и подтверди объявления перед публикацией</p>
+            <p class="text-muted">Проверяйте новые объявления и решайте, стоит ли их публиковать.</p>
         </div>
     </div>
 
@@ -24,7 +24,7 @@
                     <th>Цена</th>
                     <th>Автор</th>
                     <th>Создано</th>
-                    <th>Картинка</th>
+                    <th>Превью</th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -39,19 +39,19 @@
                         <td>
                             @php($cover = $ad->coverImagePath())
                             @if($cover)
-                                <img src="{{ asset($cover) }}" alt="Фото" style="max-width: 160px; border-radius: 6px;">
+                                <img src="{{ asset($cover) }}" alt="Превью" style="max-width: 160px; border-radius: 6px;">
                             @else
-                                <img src="https://via.placeholder.com/160x110?text=Нет+фото" alt="Нет фото" style="max-width: 160px; border-radius: 6px;">
+                                <img src="https://via.placeholder.com/160x110?text=Объявление" alt="Превью" style="max-width: 160px; border-radius: 6px;">
                             @endif
                         </td>
                         <td>
                             <form action="{{ route('moderation.approve', $ad) }}" method="POST" style="display:inline-block;">
                                 @csrf
-                                <button class="btn btn-sm btn-success" onclick="return confirm('Одобрить это объявление?')">✅</button>
+                                <button class="btn btn-sm btn-success" onclick="return confirm('Опубликовать объявление?')">Одобрить</button>
                             </form>
                             <form action="{{ route('moderation.reject', $ad) }}" method="POST" style="display:inline-block;">
                                 @csrf
-                                <button class="btn btn-sm btn-danger" onclick="return confirm('Отклонить это объявление?')">❌</button>
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('Отклонить объявление?')">Отклонить</button>
                             </form>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
             {{ $ads->links() }}
         </div>
     @else
-        <div class="alert alert-info">Нет объявлений на модерацию.</div>
+        <div class="alert alert-info">Новых объявлений на модерации нет.</div>
     @endif
 </div>
 @endsection

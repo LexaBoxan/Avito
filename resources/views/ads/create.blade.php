@@ -8,7 +8,7 @@
         <div class="card shadow-sm border-0">
             <div class="card-body p-4">
                 <h2 class="h3 mb-3">Новое объявление</h2>
-                <p class="text-muted mb-4">Заполните все поля и добавьте несколько хороших фотографий, чтобы объявление выглядело привлекательнее.</p>
+                <p class="text-muted mb-4">Заполните форму и отправьте объявление на модерацию. После проверки оно появится на главной странице и будет доступно покупателям.</p>
 
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
@@ -29,14 +29,12 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Заголовок</label>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Например: Продам велосипед" value="{{ old('title') }}" required>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Например: Велосипед Trek Marlin" value="{{ old('title') }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание</label>
-                        <!--<textarea id="description" name="description" rows="5" class="form-control" placeholder="Опишите товар подробнее..." required>{{ old('description') }}</textarea>-->
                         <textarea name="description" class="js-ckeditor">{{ old('description') }}</textarea>
-
                     </div>
 
                     <div class="row g-3">
@@ -47,7 +45,7 @@
                         <div class="col-md-6">
                             <label for="images" class="form-label">Фотографии</label>
                             <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
-                            <div class="form-text">До 10 изображений в форматах JPG, PNG, GIF или WebP.</div>
+                            <div class="form-text">До 10 файлов в форматах JPG, PNG, GIF или WebP.</div>
                         </div>
                     </div>
 

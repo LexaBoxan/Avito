@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'insertImage', '|',
         'undo','redo'
       ],
-      removePlugins: ['MediaEmbed','AutoMediaEmbed'],  // видео выключены
+      removePlugins: ['MediaEmbed','AutoMediaEmbed'],  // не даём вставлять видео
 
-      // Используем CKFinder Upload Adapter
+      // Настраиваем загрузку файлов через CKFinder
       ckfinder: {
         uploadUrl: '/upload-image',
-        headers: { 'X-CSRF-TOKEN': csrf }   // <-- важно!
+        headers: { 'X-CSRF-TOKEN': csrf }   // передаём токен Laravel
       },
 
       image: {
@@ -32,5 +32,4 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(console.error);
   });
 });
-
 

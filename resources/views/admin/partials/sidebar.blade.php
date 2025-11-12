@@ -4,7 +4,6 @@
   </a>
 
   <div class="sidebar">
-    <!-- Меню -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
         <li class="nav-item">
@@ -19,7 +18,6 @@
             <p>Пользователи</p>
           </a>
         </li>
-        {{-- Добавим потом: объявления, категории --}}
       </ul>
     </nav>
   </div>
