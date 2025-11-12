@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class AdController extends Controller
 {
+
     public function create()
     {
         return view('ads.create');
@@ -55,7 +56,7 @@ class AdController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('welcome', compact('ads'));
+        return view('ads.index', compact('ads'));
     }
 
     public function moderate()

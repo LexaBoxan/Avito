@@ -15,8 +15,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.attempt');
 });
 
-//Выход
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Домашняя страница
 Route::get('/', [AdController::class, 'index'])->name('home');
@@ -80,3 +79,5 @@ Route::middleware(['auth', 'role:moderator,admin'])->prefix('moderation')->name(
     Route::post('/{ad}/reject', [AdController::class, 'reject'])->name('reject');
 });
 
+//Выход
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

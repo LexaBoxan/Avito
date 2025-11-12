@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $ad->title }}</h5>
-                        <p class="mb-2 text-muted" style="max-height: 4.5em; overflow: hidden;">{{ $ad->description }}</p>
+                        <p class="mb-2 text-muted" style="max-height: 4.5em; overflow: hidden;">{!! Str::limit(strip_tags($ad->description), 100) !!}</p>
                         <div class="fw-semibold mb-2">{{ number_format($ad->price, 0, ',', ' ') }} ₽</div>
                         <p class="mb-1"><strong>Статус:</strong>
                             @switch($ad->status)

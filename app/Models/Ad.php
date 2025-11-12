@@ -34,7 +34,7 @@ class Ad extends Model
          $image = $this->images->first();
         return $image ? $image->path : null;
 
-        return $this->image ?: null;
+       
     }
 
 }

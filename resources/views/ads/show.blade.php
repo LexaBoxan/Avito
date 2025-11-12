@@ -71,7 +71,10 @@
                 </dl>
 
                 <h2 class="h5">Описание</h2>
-                <p class="fs-6">{!! nl2br(e($ad->description)) !!}</p>
+                
+                <div class="ad-description fs-6">
+                    {!! $ad->description !!}
+                </div>
 
                 <div class="mt-4 d-flex gap-2">
                     <a href="{{ route('home') }}" class="btn btn-outline-secondary">Назад к списку</a>
