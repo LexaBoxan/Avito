@@ -61,4 +61,8 @@
     </table>
   </div>
 </div>
+
+<div class="mt-3">
+    {{ $users->links() }}
+</div>
 @endsection

@@ -4,6 +4,9 @@
 
 @section('content')
 <h2 class="mb-4">Свежие объявления</h2>
+@if(request('q'))
+    <p class="text-muted">Результаты по запросу «{{ request('q') }}»</p>
+@endif
 
 @if($ads->count())
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">

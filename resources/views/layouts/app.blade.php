@@ -19,7 +19,7 @@
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">Avito</a>
 
             <form class="d-flex ms-auto me-3" role="search" action="{{ route('home') }}">
-                <input class="form-control me-2" type="search" name="q" placeholder="Поиск объявлений..." aria-label="Search">
+                <input class="form-control me-2" type="search" name="q" value="{{ request('q') }}" placeholder="Поиск объявлений..." aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit">Найти</button>
             </form>
 

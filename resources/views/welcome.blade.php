@@ -4,6 +4,9 @@
 
 @section('content')
 <h2 class="mb-4">Лучшие предложения</h2>
+@if(request('q'))
+    <p class="text-muted">Результаты по запросу «{{ request('q') }}»</p>
+@endif
 
 <div class="container mt-4">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">

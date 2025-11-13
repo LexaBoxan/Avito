@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class AdController extends Controller
 {
-
     public function create()
     {
         return view('ads.create');
@@ -22,7 +21,6 @@ class AdController extends Controller
             'images' => 'nullable|array|max:10',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
-
 
         $ad = new Ad();
         $ad->user_id = auth()->id();
@@ -46,28 +44,56 @@ class AdController extends Controller
 
     public function myAds()
     {
-        $ads = auth()->user()->ads()->with('images')->latest()->paginate(10);
+        $ads = auth()->user()
+            ->ads()
+            ->with('images')
+            ->latest()
+            ->paginate(10);
+
         return view('ads.mine', compact('ads'));
     }
-    public function index()
+
+    public function index(Request $request)
     {
         $ads = Ad::with('images')
             ->where('status', 'published')
+            ->when($request->filled('q'), function ($query) use ($request) {
+                $term = $request->input('q');
+                $query->where(function ($q) use ($term) {
+                    $q->where('title', 'like', "%{$term}%")
+                        ->orWhere('description', 'like', "%{$term}%");
+                });
+            })
             ->latest()
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
         return view('ads.index', compact('ads'));
     }
 
     public function moderate()
     {
-        $ads = Ad::with(['images', 'user'])->where('status', 'moderation')->latest()->paginate(10);
+        $ads = Ad::with(['images', 'user'])
+            ->where('status', 'moderation')
+            ->latest()
+            ->paginate(10);
+
         return view('ads.moderation', compact('ads'));
     }
 
     public function show(Ad $ad)
     {
-        if ($ad->status !== 'published' && (!auth()->check() || (auth()->id() !== $ad->user_id && !auth()->user()->isModerator() && !auth()->user()->isAdmin()))) {
+        if (
+            $ad->status !== 'published'
+            && (
+                !auth()->check()
+                || (
+                    auth()->id() !== $ad->user_id
+                    && !auth()->user()->isModerator()
+                    && !auth()->user()->isAdmin()
+                )
+            )
+        ) {
             abort(404);
         }
 
@@ -91,5 +117,4 @@ class AdController extends Controller
 
         return back()->with('success', 'Объявление отклонено.');
     }
-
 }

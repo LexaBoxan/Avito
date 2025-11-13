@@ -14,9 +14,11 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = User::all();
+        $users = User::orderByDesc('created_at')->paginate(20);
+
         return view('admin.users', compact('users'));
     }
+
     public function updateRole(Request $request, User $user)
     {
         if ($user->id === auth()->id()) {
@@ -40,8 +42,7 @@ class AdminController extends Controller
         }
 
         $user->delete();
+
         return back()->with('success', 'Пользователь удалён.');
     }
-
-    
 }
