@@ -29,6 +29,11 @@ class Ad extends Model
         return $this->hasMany(AdImage::class);
     }
 
+    public function descriptionImages(): HasMany
+    {
+        return $this->hasMany(AdDescriptionImage::class);
+    }
+
     public function coverImagePath(): ?string
     {
          $image = $this->images->first();
@@ -38,4 +43,3 @@ class Ad extends Model
     }
 
 }
-

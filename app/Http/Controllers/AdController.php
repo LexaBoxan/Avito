@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
+use App\Models\AdDescriptionImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AdController extends Controller
 {
@@ -29,6 +31,8 @@ class AdController extends Controller
         $ad->price = $validated['price'];
         $ad->status = 'moderation';
         $ad->save();
+
+        $this->attachDescriptionImages($ad);
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -116,5 +120,50 @@ class AdController extends Controller
         $ad->save();
 
         return back()->with('success', 'Объявление отклонено.');
+    }
+
+    private function attachDescriptionImages(Ad $ad): void
+    {
+        $paths = $this->extractStorageImagePaths($ad->description);
+
+        if (empty($paths)) {
+            return;
+        }
+
+        AdDescriptionImage::whereNull('ad_id')
+            ->where('user_id', $ad->user_id)
+            ->whereIn('path', $paths)
+            ->update(['ad_id' => $ad->id]);
+    }
+
+    private function extractStorageImagePaths(string $html): array
+    {
+        preg_match_all('/<img[^>]+src=["\']([^"\']+)["\']/i', $html, $matches);
+
+        if (empty($matches[1])) {
+            return [];
+        }
+
+        $paths = [];
+        foreach ($matches[1] as $src) {
+            $normalized = $this->normalizeStoragePath($src);
+            if ($normalized) {
+                $paths[] = $normalized;
+            }
+        }
+
+        return array_values(array_unique($paths));
+    }
+
+    private function normalizeStoragePath(string $src): ?string
+    {
+        $parsed = parse_url($src);
+        $path = $parsed['path'] ?? $src;
+
+        if (!Str::startsWith($path, '/storage/')) {
+            return null;
+        }
+
+        return $path;
     }
 }

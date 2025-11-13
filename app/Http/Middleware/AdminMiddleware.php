@@ -16,8 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || !Auth::user()->is_admin) {
-        abort(403, 'Доступ запрещён.');
+        $user = Auth::user();
+
+        if (!$user || !$user->isAdmin()) {
+            abort(403, 'Доступ запрещён.');
         }
 
         return $next($request);

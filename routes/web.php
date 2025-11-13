@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdController;
+use App\Models\AdDescriptionImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 // Гостевые маршруты
 Route::middleware('guest')->group(function () {
@@ -33,24 +36,50 @@ Route::middleware(['auth'])->prefix('ads')->name('ads.')->group(function () {
 Route::post('/upload-image', function (Request $request) {
 
     if (!$request->hasFile('upload')) {
+        Log::warning('CKEditor upload: no file', ['user_id' => optional($request->user())->id]);
         return response()->json([
+            'uploaded' => 0,
             'error' => ['message' => 'Файл не найден.']
         ], 400);
     }
 
     $file = $request->file('upload');
 
+    $extension = strtolower($file->getClientOriginalExtension());
     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    if (!in_array($file->getClientOriginalExtension(), $allowedTypes)) {
+    if (!in_array($extension, $allowedTypes)) {
+        Log::warning('CKEditor upload: wrong extension', [
+            'user_id' => optional($request->user())->id,
+            'extension' => $extension,
+        ]);
         return response()->json([
+            'uploaded' => 0,
             'error' => ['message' => 'Неверный формат изображения.']
         ], 422);
     }
 
     $path = $file->store('uploads', 'public');
 
+    $storedPath = Storage::url($path);
+    $assetUrl = asset($storedPath);
+
+    AdDescriptionImage::create([
+        'user_id' => auth()->id(),
+        'path' => $storedPath,
+        'original_name' => $file->getClientOriginalName(),
+        'size' => $file->getSize(),
+    ]);
+
+    Log::info('CKEditor upload: success', [
+        'user_id' => auth()->id(),
+        'path' => $storedPath,
+        'size' => $file->getSize(),
+    ]);
+
     return response()->json([
-        "url" => asset("storage/" . $path),
+        'uploaded' => true,
+        'fileName' => basename($path),
+        'url' => $assetUrl,
     ]);
 
 })->middleware('auth');
